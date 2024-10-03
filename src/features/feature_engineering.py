@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 import yaml
 import logging
 
@@ -31,9 +31,9 @@ def load_params(params_path: str) -> int:
         raise
 
 def apply_bow(X_train: pd.Series, X_test: pd.Series, max_features: int) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Apply Bag of Words transformation."""
+    """Apply TfIdf transformation."""
     try:
-        vectorizer = CountVectorizer(max_features=max_features)
+        vectorizer = TfidfVectorizer(max_features=max_features)
         X_train_bow = vectorizer.fit_transform(X_train)
         X_test_bow = vectorizer.transform(X_test)
         logging.info("Bag of Words transformation applied.")
@@ -48,8 +48,8 @@ def save_features(data_path: str, train_df: pd.DataFrame, test_df: pd.DataFrame,
         os.makedirs(data_path, exist_ok=True)
         train_df["label"] = y_train
         test_df["label"] = y_test
-        train_df.to_csv(os.path.join(data_path, "train_bow.csv"), index=False)
-        test_df.to_csv(os.path.join(data_path, "test_bow.csv"), index=False)
+        train_df.to_csv(os.path.join(data_path, "train_tfidf.csv"), index=False)
+        test_df.to_csv(os.path.join(data_path, "test_tfidf.csv"), index=False)
         logging.info(f"Features saved to {data_path}")
     except Exception as e:
         logging.error(f"Error saving features: {e}")

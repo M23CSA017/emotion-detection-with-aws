@@ -51,7 +51,7 @@ def save_model(model: GradientBoostingClassifier, file_path: str) -> None:
 
 def main() -> None:
     try:
-        data_path = "./data/features/train_bow.csv"
+        data_path = "./data/features/train_tfidf.csv"
         params_path = "params.yaml"
         model_save_path = "models/model.pkl"
 
